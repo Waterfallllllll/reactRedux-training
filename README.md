@@ -1,16 +1,41 @@
-# React + Vite
+# Redux Counter (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Небольшой учебный проект, показывающий, как использовать **Redux** в React-приложении.
+Приложение хранит число `counter` в Redux-store и позволяет менять его через кнопки.
 
-Currently, two official plugins are available:
+## Что происходит в приложении
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- `src/main.jsx` создаёт Redux store через `createStore(reducer, ...)` и оборачивает приложение в `Provider`.
+- `src/reducer.jsx` хранит состояние `counter` (стартовое значение — `0`) и обрабатывает действия:
+  - `INC` — увеличивает `counter` на 1
+  - `DEC` — уменьшает `counter` на 1
+  - `RND` — умножает `counter` на `payload` (payload генерируется как случайное число от `0` до `9`)
+- `src/actions.jsx` определяет creators для трёх типов действий: `inc`, `dec`, `rnd`.
+- `src/components/Counter.jsx` отображает текущее значение и dispatch-ит action creators при кликах:
+  - `useSelector` читает `state.counter`
+  - `useDispatch` отправляет `inc()/dec()/rnd()`
+- `src/components/App.jsx` просто рендерит компонент `Counter`.
 
-## React Compiler
+## Основные файлы
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- `src/main.jsx` — инициализация Redux store и `Provider`
+- `src/reducer.jsx` — редьюсер и начальное состояние
+- `src/actions.jsx` — action creators
+- `src/components/Counter.jsx` — UI + dispatch/useSelector
+- `src/components/App.jsx` — контейнер верхнего уровня
 
-## Expanding the ESLint configuration
+## Запуск
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Установите зависимости:
+   - `npm install`
+2. Запустите dev-сервер:
+   - `npm run dev`
+3. Для сборки:
+   - `npm run build`
+
+## Стек
+
+- React 19
+- Redux 5
+- react-redux 9
+- Vite
